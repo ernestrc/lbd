@@ -1,0 +1,28 @@
+[package]
+name = "lbd"
+version = "0.1.0"
+authors = ["Ernest Romero <ernest@tokbox.com>"]
+
+[dependencies]
+env_logger = "0.3.1"
+log = "0.3.1"
+docopt = "0.6"
+docopt_macros = "0.6"
+rustc-serialize = "0.3"
+#Iron deps
+iron = "*"
+staticfile = "*"
+urlencoded = "*"
+router = "*"
+term = "*"
+
+[dependencies.logger]
+git = "https://github.com/iron/logger.git"
+
+[[bin]]
+name = "lbd"
+path = "src/lbd.rs"
+
+[[bin]]
+name = "lbdd"
+path = "src/lbdd.rs"
