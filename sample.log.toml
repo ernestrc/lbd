@@ -1,0 +1,19 @@
+# Scan this file for changes every 3000 seconds
+refresh_rate = 3000
+
+[appender.stdout]
+kind = "console"
+pattern = "[%l] %d  %M: %m"
+
+[appender.file]
+kind = "file"
+path = "/var/log/lbd.log"
+pattern = "[%l] %d  %M: %m"
+
+[root]
+level = "debug"
+appenders = ["stdout", "file"]
+
+[[logger]]
+name = "hyper::server"
+level = "info"

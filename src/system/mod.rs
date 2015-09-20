@@ -1,4 +1,4 @@
-mod config;
+pub mod config;
 
 use super::dal::Dal;
 use self::config::Config;
@@ -9,9 +9,9 @@ pub struct System {
 }
 
 impl System {
-    pub fn new(dal: Dal) -> System {
+    pub fn new(dal: Dal, config: Config) -> System {
         System {
-            config: Config::load(),
+            config: config,
             dal: dal
         }
     }

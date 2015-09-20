@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Ernest Romero <ernest@tokbox.com>"]
 
 [dependencies]
+log4rs = "0.3.3"
 env_logger = "0.3.1"
 log = "0.3.1"
 docopt = "0.6"

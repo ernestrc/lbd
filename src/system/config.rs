@@ -7,6 +7,9 @@ use std::path::Path;
 use super::super::utils::*;
 use std::io;
 use std::io::prelude::*;
+use std::default::Default;
+use log4rs;
+use env_logger;
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Config {
@@ -18,8 +21,9 @@ pub struct Config {
 
 static CONFIG_DIR: &'static str = "/etc/lbd";
 static CONFIG_FILE: &'static str = "/etc/lbd/config.json";
+static CONFIG_LOG: &'static str = "/etc/lbd/log.toml";
 
-fn touch_file() -> io::Result<Config> {
+fn touch_cfg() -> io::Result<Config> {
     match OpenOptions::new().create(true).write(true).open(CONFIG_FILE) {
         Ok(mut f) => {
             let empty = Config::empty();
@@ -33,19 +37,19 @@ fn touch_file() -> io::Result<Config> {
 
 impl Config{
 
-    fn empty() -> Config {
-        Config {
-            etcd_url: None,
-            slack_channel: None,
-            admins: vec![],
-            bin: HashMap::new()
-        }
-    }
-
     pub fn load() -> Config {
-        //first check if config folder exists
+        //check if config folder exists
         match fs::metadata(CONFIG_DIR) {
-            Ok(ref attrs) if attrs.is_dir() =>
+            Ok(ref attrs) if attrs.is_dir() => {
+                //check if log configuration file exists
+                match fs::metadata(CONFIG_LOG) {
+                    Ok(ref log_cfg_attr) if log_cfg_attr.is_file() =>
+                        log4rs::init_file(CONFIG_LOG, Default::default()).unwrap(),
+                    _ => {
+                        println!("Could not find LOG cfg in {}. Using env logger instead (remember to run setting env var RUST_LOG=level)", CONFIG_LOG);
+                        env_logger::init().unwrap();
+                    }
+                };
                 match fs::metadata(CONFIG_FILE) {
                     Ok(ref cfg_attr) if cfg_attr.is_file() => {
                         let mut file =
@@ -54,12 +58,22 @@ impl Config{
                         get!(file.read_to_string(&mut contents), "Could not read config file");
                         get!(json::decode(&contents.to_string()), "Could not decode config file to JSON")
                     },
-                    _ => touch_file().unwrap()
-                },
+                    _ => touch_cfg().unwrap()
+                }
+            }
             _ => {
                 get!(fs::create_dir(CONFIG_DIR), &format!("Could not create config dir in {}", CONFIG_DIR));
-                get!(touch_file(), &format!("Could not create config file in {}", CONFIG_FILE))
+                get!(touch_cfg(), &format!("Could not create config file in {}", CONFIG_FILE))
             }
+        }
+    }
+
+    fn empty() -> Config {
+        Config {
+            etcd_url: None,
+            slack_channel: None,
+            admins: vec![],
+            bin: HashMap::new()
         }
     }
 }
