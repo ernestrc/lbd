@@ -3,7 +3,10 @@ extern crate logger;
 extern crate term;
 #[macro_use]
 extern crate router;
+extern crate rustc_serialize;
 
+#[macro_use]
+mod utils;
 mod api;
 mod dal;
 mod system;
