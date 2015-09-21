@@ -6,11 +6,13 @@ extern crate log4rs;
 extern crate env_logger;
 extern crate term;
 extern crate rustc_serialize;
+extern crate toml;
 
 #[macro_use] mod utils;
 mod api;
 mod dal;
 mod system;
+mod model;
 
 use iron::prelude::Iron;
 use logger::Logger;
@@ -25,7 +27,7 @@ static FORMAT: &'static str =
 
 fn main() {
 
-    let config = Config::load();
+    let config: &Config = &Config::load();
 
     info!("Loaded config successfully. Booting up now..");
 

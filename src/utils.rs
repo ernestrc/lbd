@@ -11,6 +11,6 @@ macro_rules! get {
             $res: expr, $msg: expr
         );*
     ) => {
-                $( $res.map_err(&*enrich_err($msg)).unwrap() )*
+                $( $res.map_err(|e| format!("{}: {}", $msg, e)).unwrap() )*
     }
 }

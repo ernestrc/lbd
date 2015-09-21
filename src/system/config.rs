@@ -8,11 +8,13 @@ use super::super::utils::*;
 use std::io;
 use std::io::prelude::*;
 use std::default::Default;
+use std::str::FromStr;
 use log4rs;
 use env_logger;
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Config {
+    pub pub_host: String,
     etcd_url: Option<String>,
     slack_channel: Option<String>,
     admins: Vec<String>,
@@ -22,6 +24,7 @@ pub struct Config {
 static CONFIG_DIR: &'static str = "/etc/lbd";
 static CONFIG_FILE: &'static str = "/etc/lbd/config.json";
 static CONFIG_LOG: &'static str = "/etc/lbd/log.toml";
+static DEFAULT_HOST: &'static str = "localhost:2846";
 
 fn touch_cfg() -> io::Result<Config> {
     match OpenOptions::new().create(true).write(true).open(CONFIG_FILE) {
@@ -70,6 +73,7 @@ impl Config{
 
     fn empty() -> Config {
         Config {
+            pub_host: String::from_str(DEFAULT_HOST).unwrap(),
             etcd_url: None,
             slack_channel: None,
             admins: vec![],
