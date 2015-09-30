@@ -5,8 +5,8 @@ use super::period;
 use super::super::system; 
 use std::fmt;
 use std::path::Path;
-use toml::Decoder;
-use rustc_serialize::Decodable;
+use toml::{ Decoder, Encoder };
+use rustc_serialize::{ Decodable, Encodable };
 use super::super::utils;
 
 pub type Id = String;
@@ -37,13 +37,20 @@ struct Job {
 fn prepare_env(for_job: &self::Id, argso: &Option<Vec<String>>) -> io::Result<()> {
     argso.map( |args: Vec<String>| {
         args.map( |arg: String| {
-            //TODO  continue here
+            unimplemented!()
         })
     }).or_else(|| info!("No args found for job with id {}", for_job))
 }
 
 
 impl Job {
+
+    pub fn to_toml(&self) -> ::toml::Value {
+        let mut encoder = Encoder::new();
+        let errMsg = "Could not encode job to toml format";
+        get!(self.encode(&mut encoder),errMsg);
+        ::toml::Value::Table(encoder.toml)
+    }
 
     pub fn from_toml(table: ::toml::Value) -> Job {
         get!(Decodable::decode(&mut Decoder::new(table)), 
