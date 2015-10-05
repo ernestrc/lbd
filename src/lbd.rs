@@ -19,6 +19,11 @@ docopt!(Args derive Debug, "
  Usage:
   lbd new (schedule|job)
   lbd submit <path> [ --all ]
+  lbd run <job_id>
+  lbd inspect <job_id>
+  lbd rm (<job_id>| <schedule_id>)
+  lbd kill <job_id> [ --all ]
+  lbd tree <schedule_id>
   lbd ps
   lbd (-h | --help)
   lbd --version
@@ -26,9 +31,7 @@ docopt!(Args derive Debug, "
 Options:
   -h --help     Show this message.
   --version     Show version.
-  --speed=<kn>  Speed in knots [default: 10].
-  --moored      Moored (anchored) mine.
-  --drifting    Drifting mine.
+  --verbose     Turn on debugging messages
 ");
 
 fn main() {

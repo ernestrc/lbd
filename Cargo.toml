@@ -7,24 +7,26 @@ authors = ["Ernest Romero <ernest@tokbox.com>"]
 log4rs = "0.3.3"
 env_logger = "0.3.1"
 log = "0.3.1"
-docopt = "0.6"
-docopt_macros = "0.6"
+docopt = "0.6.73"
+docopt_macros = "0.6.73"
 rustc-serialize = "0.3"
-toml = "*"
+toml = "0.1.22"
 #Iron deps
-iron = "*"
-staticfile = "*"
-urlencoded = "*"
-router = "*"
-term = "*"
-
-[dependencies.logger]
-git = "https://github.com/iron/logger.git"
+iron = "0.2.2"
+staticfile = "0.0.6"
+urlencoded = "0.2.0"
+router = "0.0.15"
+term = "0.2.11"
+logger = "0.0.3"
 
 [[bin]]
 name = "lbd"
 path = "src/lbd.rs"
+test = true
+doctest = true
 
 [[bin]]
 name = "lbdd"
 path = "src/lbdd.rs"
+test = true
+doctest = true

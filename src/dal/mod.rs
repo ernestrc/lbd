@@ -1,6 +1,5 @@
 use std::fs;
 use std::fs::OpenOptions;
-use super::utils::enrich_err;
 use std::io::prelude::*;
 
 static VAR_DIR: &'static str = "/var/lbd";

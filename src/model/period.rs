@@ -1,4 +1,4 @@
-pub type Id = i32;
+pub type Id = String;
 
 pub struct Period {
     id: Id,
