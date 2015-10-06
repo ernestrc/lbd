@@ -3,6 +3,22 @@ name = "lbd"
 version = "0.1.0"
 authors = ["Ernest Romero <ernest@tokbox.com>"]
 
+[lib]
+name = "lbd"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lbd"
+path = "src/lbd.rs"
+test = true
+doctest = true
+
+[[bin]]
+name = "lbdd"
+path = "src/lbdd.rs"
+test = true
+doctest = true
+
 [dependencies]
 log4rs = "0.3.3"
 env_logger = "0.3.1"
@@ -19,14 +35,4 @@ router = "0.0.15"
 term = "0.2.11"
 logger = "0.0.3"
 
-[[bin]]
-name = "lbd"
-path = "src/lbd.rs"
-test = true
-doctest = true
 
-[[bin]]
-name = "lbdd"
-path = "src/lbdd.rs"
-test = true
-doctest = true

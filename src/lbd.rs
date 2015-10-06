@@ -1,9 +1,12 @@
 #![feature(plugin)]
 #![plugin(docopt_macros)]
-extern crate rustc_serialize;
 extern crate docopt;
+extern crate rustc_serialize;
+#[macro_use] extern crate lbd;
+#[macro_use] extern crate log;
 
 use docopt::Docopt;
+use lbd::prelude::*;
 
 docopt!(Args derive Debug, "
 .___                           __                                 __

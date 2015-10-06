@@ -8,8 +8,6 @@ use std::io;
 use std::io::prelude::*;
 use std::default::Default;
 use std::str::FromStr;
-use log4rs;
-use env_logger;
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Config {
@@ -46,10 +44,10 @@ impl Config{
                 //check if log configuration file exists
                 match fs::metadata(CONFIG_LOG) {
                     Ok(ref log_cfg_attr) if log_cfg_attr.is_file() =>
-                        log4rs::init_file(CONFIG_LOG, Default::default()).unwrap(),
+                        ::log4rs::init_file(CONFIG_LOG, Default::default()).unwrap(),
                     _ => {
                         println!("Could not find LOG cfg in {}. Using env logger instead (remember to run setting env var RUST_LOG=level)", CONFIG_LOG);
-                        env_logger::init().unwrap();
+                        ::env_logger::init().unwrap();
                     }
                 };
                 match fs::metadata(CONFIG_FILE) {

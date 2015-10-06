@@ -1,26 +1,7 @@
-#[macro_use] extern crate router;
+#[macro_use] extern crate lbd;
 #[macro_use] extern crate log;
-extern crate iron;
-extern crate logger;
-extern crate log4rs;
-extern crate env_logger;
-extern crate term;
-extern crate rustc_serialize;
-extern crate toml;
 
-#[macro_use] mod utils;
-mod api;
-mod dal;
-mod system;
-mod model;
-
-use iron::prelude::Iron;
-use logger::Logger;
-use logger::format::Format;
-use api::Api;
-use system::System;
-use dal::Dal;
-use system::config::Config;
+use lbd::prelude::*;
 
 static FORMAT: &'static str =
 "Api: Iron: @[blue]{method} @{uri} - {status} in  @[brightgreen]{response-time}@";
